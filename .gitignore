@@ -6,3 +6,5 @@ allure-results/
 allure-report/
 *.pyc
 .DS_Store
+.idea/
+*.iml
