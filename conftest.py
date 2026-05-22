@@ -1,5 +1,6 @@
 import os
 
+import allure
 import pytest
 import requests
 from dotenv import load_dotenv
@@ -80,3 +81,22 @@ def created_booking(auth_session: requests.Session, booking_payload: dict):
 def user_data() -> dict:
     """Возвращает случайные данные пользователя для регистрации."""
     return generate_user()
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    """
+    Хук для создания скриншота при падении UI теста.
+    """
+    outcome = yield
+    rep = outcome.get_result()
+    setattr(item, "rep_" + rep.when, rep)
+
+    if call.when == "call" and (rep.failed or hasattr(rep, "wasxfail")):
+        page = item.funcargs.get("page")
+        if page:
+            allure.attach(
+                page.screenshot(full_page=True),
+                name="screenshot_on_failure",
+                attachment_type=allure.attachment_type.PNG
+            )
