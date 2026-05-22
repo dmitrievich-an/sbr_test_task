@@ -96,7 +96,7 @@ cd sbr_test_task
 
 ### 2. Создать файл .env
 
-Создай файл `.env` в корне проекта (содержимое см. выше).
+Создать файл `.env` в корне проекта (содержимое см. выше).
 
 ### 3. Запустить тесты
 
@@ -109,6 +109,36 @@ docker-compose up --build
 ```bash
 allure serve allure-results
 ```
+
+---
+
+## Запуск через GitHub Actions
+
+### 1. Форкнуть репозиторий
+
+Нажать кнопку **Fork** в правом верхнем углу страницы этого репозитория.
+
+### 2. Добавить секреты
+
+Зайти в **Settings → Secrets and variables → Actions → New repository secret** и добавить следующие секреты (значения взять из раздела "Создать файл .env" выше):
+   - `API_BASE_URL`
+   - `UI_BASE_URL`
+   - `UI_LOGIN`
+   - `UI_PASSWORD`
+   - `API_USERNAME`
+   - `API_PASSWORD`
+
+### 3. Запустить тесты
+
+Зайти во вкладку **Actions → Tests → Run workflow**.
+
+### 4. Включить GitHub Pages
+
+Зайти в **Settings → Pages → Branch: gh-pages → Save**.
+
+### 5. Посмотреть Allure отчёт
+
+Отчёт будет доступен по адресу: `https://<github_username>.github.io/sbr_test_task/`
 
 ---
 
@@ -141,3 +171,6 @@ sbr_test_task/
 ├── docker-compose.yml
 └── pytest.ini
 ```
+
+---
+*Поздравляю, ты прочитал документацию. Ты один из немногих. `while True: be_happy()`*
